@@ -1,33 +1,24 @@
 import csv
 import sys
 
-if len(sys.argv) < 2:
-  print "Usage: ./csv-html.py <your CSV file> <your HTML File.html>"
-  print
-  print
-  exit(0)
+reader = csv.DictReader(open("/Users/aashild/Documents/Python/CSV2HTML/concerts.csv"))
 
-# Open the CSV file for reading
-reader = csv.reader(open(sys.argv[1]))
+f_html = open('/Users/aashild/Documents/Python/CSV2HTML/formatted.html',"w")
 
-# Create the HTML file
-f_html = open(sys.argv[2],"w")
 
-for row in reader: # Read a single row from the CSV file
-    print(row)
-    f_html.write('<tr>');# Create a new row in the table
-    if row == 0 or 1 or 2 or 3 or 4:
+for row in reader:
+    
+    f_html.write('<tr>')
 
-        for column in row: # For each column..
-            print("Working first")
-            f_html.write('<td>' + column + '</td>')
-
-    if row == 5:
-
-        for column in row:
-            print("Working second")
-            f_html.write('<td><a href="' + column + '">Link</a></td>')
+    f_html.write('<td>' + row['År'] + '</td>')
+    f_html.write('<td>' + row['Komponist'] + '</td>')
+    f_html.write('<td>' + row['Verk'] + '</td>')
+    f_html.write('<td>' + row['Dirigent'] + '</td>')
+    f_html.write('<td>' + row['Sted'] + '</td>')
+    
+    if row['Mer Info'] != (''):
+        f_html.write('<td><a href="' + row['Mer Info'] + '"target="_blank">Link</a></td>')
+    else:
+        f_html.write('<td>' + '</td>')
 
     f_html.write('</tr>')
-
-f_html.write('</table>')
